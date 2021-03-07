@@ -47,10 +47,10 @@
 									code="label.member.title.connect" /><span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a
-									href="${pageContext.request.contextPath}/memeber/login"><spring:message
+									href="${pageContext.request.contextPath}/member/login"><spring:message
 											code="label.member.title.login" /></a></li>
 								<li><a
-									href="${pageContext.request.contextPath}/memeber/regist"><spring:message
+									href="${pageContext.request.contextPath}/member/regist"><spring:message
 											code="label.member.title.regist" /></a></li>
 							</ul></li>
 					</ul>
