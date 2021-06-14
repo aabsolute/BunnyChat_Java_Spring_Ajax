@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
 	<!-- Insert Member Information -->
-	<insert id="insert">
+	<insert id="insertMember" parameterType="member">
 		INSERT INTO MEMBER_INFO_TABLE
 		( USER_ID
 		, USER_EMAIL
@@ -15,21 +15,25 @@
 		, USER_regdate
 		, USER_lastLogin)
 		VALUES( 
-		  #{userID}
-		, #{userPassword}
+		  #{userId}
+		, #{userEmail}
 		, #{userName}
+		, #{userPassword} 
 		, #{userAge} 
-		, #{userGender} 
-		, #{userEmail} 
-		, #{userInfomation} 
-		, DEFAULT(`USER_regdate`) 
-		, DEFAULT(`USER_lastLogin`) )
+		, #{userInfomation}
+		, DEFAULT 
+		, DEFAULT)
 	</insert>
-	<!-- 
-	<select id="checkEmail" parameterType="String"  resultType="String"> resultType="member"
-		SELECT user_EMAIL 
-		FROM Member_Info
-		where user_EMAIL = #{userEmail}
-	</select> -->
+	<select id="memberLogIn" parameterType="member"  resultType="member">
+		SELECT * 
+		FROM MEMBER_INFO_TABLE
+		where USER_ID = #{userId}
+		and USER_PASSWORD = #{userPassword}
+	</select>
+	<select id="memberCheck" parameterType="String"  resultType="int">
+		SELECT count(user_id)
+		FROM MEMBER_INFO_TABLE
+		where USER_ID = #{userId}
+	</select>
 
 </mapper>

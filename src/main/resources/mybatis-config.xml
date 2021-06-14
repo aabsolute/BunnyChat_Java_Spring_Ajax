@@ -5,7 +5,7 @@
 <configuration>
 	<!-- 
 	마이바티스 작동 규칙 정의
-    <settings>
+    
          설정에서 각 매퍼에 설정된 캐시를 전역적으로 사용할지 말지에 대한 여부
         <setting name="cacheEnabled" value="false" />
         생성키에 대한 JDBC 지원을 허용. 지원하는 드라이버가 필요하다. true로 설정하면 생성키를 강제로 생성한다.
@@ -13,8 +13,12 @@
        전통적인 데이터베이스 칼럼명 형태인 A_COLUMN을 CamelCase형태의 자바 프로퍼티명 형태인 aColumn으로 자동으로 매핑하도록 함
         <setting name="mapUnderscoreToCamelCase" value="true" />
     </settings>
-	
-	<typeAliases>	
-		<typeAlias type="com.vivienne.member.vo.MemberVO" alias="member" />				
-	</typeAliases> -->
+	-->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+ 	<typeAliases>	
+		<typeAlias type="com.bunny.memeber.dto.MemberDTO" alias="member" />				
+		<typeAlias type="com.bunny.chat.dto.ChatDTO" alias="chat" />
+	</typeAliases>
 </configuration>

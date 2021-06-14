@@ -23,4 +23,20 @@ public class MemberService {
 		return result;
 	}
 	
+	public MemberDTO memberLogIn(MemberDTO memberDTO) throws Exception
+	{
+		MemberDTO member = memberDAO.memberLogIn(memberDTO);
+		
+		if(member == null) return null;
+		
+		return member;
+	}
+	
+	public int memberCheck(String userID) throws Exception
+	{
+		return memberDAO.memberCheck(userID);
+	}
+	
+	
+	
 }

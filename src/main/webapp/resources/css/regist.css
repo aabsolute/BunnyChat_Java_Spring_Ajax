@@ -1,0 +1,10 @@
+/* regist ID OK */
+.id_input_re_1 {
+	color: green;
+	display: none;
+}
+/* regist ID ERROR */
+.id_input_re_2 {
+	color: red;
+	display: none;
+}

@@ -9,14 +9,17 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Alias("memberDTO")
+@Alias("member")
 public class MemberDTO {
 
-	private String userID;
+	private String userId;
 	private String userPassword;
+	private String userPassword2;
 	private String userName;
 	private int userAge;
 	private String userGender;
 	private String userEmail;
 	private String userInfomation;
+	
+	//private String status;
 }
