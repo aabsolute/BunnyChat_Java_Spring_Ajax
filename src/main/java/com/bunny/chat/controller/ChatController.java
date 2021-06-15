@@ -1,5 +1,8 @@
 package com.bunny.chat.controller;
 
+
+import java.net.URLEncoder;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -38,19 +41,6 @@ public class ChatController {
 		return "chat/chat";
 	}
 	
-	@RequestMapping(value = "/findFirend", method = RequestMethod.GET)
-	public String searchFriend(Model model, HttpServletRequest request)
-	{
-		log.debug("findFirend START");
-		HttpSession session = request.getSession();
-		MemberDTO loginUser = (MemberDTO) session.getAttribute("login");
-		log.info(loginUser.getUserId());
-		
-		
-		log.debug("findFirend END");
-		
-		return "chat/chat";
-	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/chatSubmit", method = RequestMethod.POST)
@@ -85,11 +75,11 @@ public class ChatController {
 			else {
 				result = chatService.getId(chatDTO);
 			}
+			result = URLEncoder.encode(result, "UTF-8");
 		} catch (Exception e) {
 		}
 		
 		log.debug("chatList POST END");
-		
 		return result;
 	}
 	

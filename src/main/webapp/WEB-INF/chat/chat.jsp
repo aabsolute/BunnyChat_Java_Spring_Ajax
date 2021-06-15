@@ -105,14 +105,15 @@
 				success : function(jdata) {
 					if (jdata == "")
 						return;
-					var result = JSON.parse(jdata);
+					var encodeData = decodeString(jdata);
+					var result = JSON.parse(encodeData);
 					for (key in result) {
 						if(result[key].fromUserId == fromId){
-							addMeChat("Me",
-									result[key].chatContent, result[key].chatTime);
+							addMeChat("Me", decodeURIComponent(result[key].chatContent)
+									,decodeURIComponent(result[key].chatTime));
 						}else{
-							addChat(result[key].fromUserId,
-									result[key].chatContent, result[key].chatTime);	
+							addChat(decodeURIComponent(result[key].fromUserId),
+									decodeURIComponent(result[key].chatContent), decodeURIComponent(result[key].chatTime));	
 						}
 					}
 					lastId = Number(result[result.length-1].chatId);
@@ -153,6 +154,15 @@
 									+ '</div>' + '</div>' + '</div>' + '<hr>');
 			$('#chatlist').scrollTop($('#chatlist')[0].scrollHeight);
 		}
+		
+		function decodeString(str){
+			if(str.indexOf("+") > 0){
+				return decodeURIComponent(decodeURI(str).replace(/\+/g, " "));
+			} else {
+				return decodeURIComponent(decodeURI(str));
+			}
+		}
+
 
 		function getInfiniteChat() {
 			setInterval(function() {
