@@ -29,7 +29,7 @@ public class ChatService {
 	public List<ChatDTO> getChatRecentInfo(ChatDTO chatDTO, int number) throws Exception
 	{
 		List<ChatDTO> charList = new ArrayList<ChatDTO>();
-		charList = chatDAO.getChatRecentInfo(chatDTO, number);
+		charList = chatDAO.getChatRecentInfo(chatDTO);
 		if(charList == null || charList.size() == 0)
 			return new ArrayList<ChatDTO>();
 		return charList;
@@ -44,7 +44,8 @@ public class ChatService {
 	public String getTen(ChatDTO chatDTO) throws Exception
 	{
 		List<ChatDTO> charList = new ArrayList<ChatDTO>();
-		charList = chatDAO.getChatRecentInfo(chatDTO, 10);
+		chatDTO.setNumber(10);
+		charList = chatDAO.getChatRecentInfo(chatDTO);
 		
 		Gson gson = new Gson();
 		String jsonString = gson.toJson(charList);

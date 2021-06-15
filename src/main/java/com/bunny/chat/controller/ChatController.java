@@ -38,6 +38,20 @@ public class ChatController {
 		return "chat/chat";
 	}
 	
+	@RequestMapping(value = "/findFirend", method = RequestMethod.GET)
+	public String searchFriend(Model model, HttpServletRequest request)
+	{
+		log.debug("findFirend START");
+		HttpSession session = request.getSession();
+		MemberDTO loginUser = (MemberDTO) session.getAttribute("login");
+		log.info(loginUser.getUserId());
+		
+		
+		log.debug("findFirend END");
+		
+		return "chat/chat";
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/chatSubmit", method = RequestMethod.POST)
 	public int chatSubmit(ChatDTO chatDTO, HttpServletRequest request)
@@ -68,8 +82,9 @@ public class ChatController {
 		try {
 			if("ten".equals(chatDTO.getListType()))
 				result = chatService.getTen(chatDTO);
-			else
+			else {
 				result = chatService.getId(chatDTO);
+			}
 		} catch (Exception e) {
 		}
 		

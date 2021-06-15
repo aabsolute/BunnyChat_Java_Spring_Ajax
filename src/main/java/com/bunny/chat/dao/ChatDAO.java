@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +21,7 @@ public class ChatDAO {
 		return sqlSession.selectList("chatMapper.chatInfo", chatDTO);
 	}
 	
-	public List<ChatDTO> getChatRecentInfo(ChatDTO chatDTO,@Param("number") int number) throws Exception
+	public List<ChatDTO> getChatRecentInfo(ChatDTO chatDTO) throws Exception
 	{
 		return sqlSession.selectList("chatMapper.chatRecentInfo", chatDTO);
 	}

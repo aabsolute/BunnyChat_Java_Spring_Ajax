@@ -134,8 +134,7 @@ public class MemberController {
 		log.debug("memberLogOut GET START");
 
 		HttpSession session = request.getSession();
-		session.setAttribute("login", null);
-		
+		session.invalidate();
 		log.debug("memberLogOut GET END");
 		return "redirect:/";
 	}

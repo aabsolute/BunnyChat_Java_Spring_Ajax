@@ -20,4 +20,5 @@ public class ChatDTO {
 	private String chatContent;
 	private Date chatTime;
 	private String listType;
+	private int number;
 }
