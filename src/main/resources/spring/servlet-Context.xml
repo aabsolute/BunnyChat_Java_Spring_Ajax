@@ -31,6 +31,12 @@
 	<!-- 인터셉터 객체 생성 -->
 	<beans:bean id="AuthLoginInterceptor" class="com.bunny.interceptor.AuthLoginInterceptor">
 	</beans:bean>
+	
+	<!-- 인터셉터 객체 생성 -->
+	<!-- <beans:bean  id="LocaleInterceptor"  class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<beans:property name="paramName" value="lang" />
+	</beans:bean> -->
+	
 	<!-- Interceptor 설정 -->
 	<interceptors>
 	    <interceptor>
@@ -39,7 +45,17 @@
 	        <exclude-mapping path="/resources/**"/>
 	        <beans:ref bean="AuthLoginInterceptor"/>
 	    </interceptor>
+	    
+	  <!--   <interceptor>         locale interceptor;;;;
+			<mapping path="/**" />
+			<exclude-mapping path="/resources/**"/>
+	        <beans:ref bean="LocaleInterceptor"/>
+		</interceptor>
+	 -->
 	</interceptors>
+	
+
+
 	
 	<context:component-scan base-package="com.bunny.*" />
 </beans:beans>

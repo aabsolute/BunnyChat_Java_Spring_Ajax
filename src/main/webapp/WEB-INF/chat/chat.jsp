@@ -110,7 +110,6 @@
 						}
 					}
 					lastId = Number(result[result.length-1].chatId);
-					alert(lastId);
 				}
 			});
 		}

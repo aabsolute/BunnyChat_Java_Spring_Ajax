@@ -59,11 +59,13 @@
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li class="nav-item"><a
-					href="${pageContext.request.contextPath}/">Main</a></li>
+					href="${pageContext.request.contextPath}/"><spring:message code="label.menu.main" /></a></li>
 					<li class="nav-item"><a
-					href="${pageContext.request.contextPath}/chat/main">ChatingRoom</a></li>
+					href="${pageContext.request.contextPath}/chat/main"><spring:message code="label.menu.chatroom" /></a></li>
 					<li class="nav-item"><a
-					href="${pageContext.request.contextPath}/chat/findFriend">searchFriend</a></li>
+					href="${pageContext.request.contextPath}/chat/findFriend"><spring:message code="label.menu.searchfriend" /><span id="unread" class="label babel-info"></span></a></li>
+					<li class="nav-item"><a
+					href="${pageContext.request.contextPath}/chat/messageBox"><spring:message code="label.menu.messagebox" /></a></li>
 					<li class="nav-item"><a
 					href="${pageContext.request.contextPath}/board/">BoardRoom</a></li>
 					<li class="nav-item"><a
@@ -107,5 +109,35 @@
 			</c:choose>
 		</div>
 	</nav>
+	<script type="text/javascript">
+		function getUnread() {
+			var userId = '<c:out value="${sessionScope.login.userId}"/>';
+			$.ajax({
+				type : 'post',
+				url : '/chat/getUnread',
+				data : {
+					'userId' : encodeURIComponent(userId)
+				},
+				success : function(result) {
+					if (result >= 1) {
+						showUnread(result);
+					} else {
+						showUnread('');
+					}
+				}
+			});
+		}
+		
+		function getInfiniteUnread(){
+			setInterval(function() {
+				getUnread();
+			}, 5000);
+		}
+
+		function showUnread(result){
+			$('#unread').html(result);
+		}
+		
+	</script>
 </body>
 </html>

@@ -94,12 +94,14 @@ public class ChatController {
 		String result ="";
 		try {
 			if("ten".equals(chatDTO.getListType()))
-				//result = chatService.getTen(chatDTO);
-				result = chatService.getId(chatDTO);
+				result = chatService.getTen(chatDTO);
 			else {
 				result = chatService.getId(chatDTO);
 			}
 			result = URLEncoder.encode(result, "UTF-8");
+			if(!"".equals(result)) {
+				chatService.setReadFlag(chatDTO);
+			}
 		} catch (Exception e) {
 		}
 		
@@ -107,6 +109,22 @@ public class ChatController {
 		return result;
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping(value = "/getUnread", method = RequestMethod.POST)
+	public int getUnreadMessage(@ModelAttribute("userId") String userId)
+	{
+		log.debug("getUnreadMessage POST START");
+		
+		int result = 0;
+		try {
+			result = chatService.getUnReadMessage(userId);
+		} catch (Exception e) {
+		}
+		
+		log.debug("getUnreadMessage POST END");
+		return result;
+	}
 	
 	
 }

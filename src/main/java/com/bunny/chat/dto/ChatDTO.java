@@ -18,7 +18,8 @@ public class ChatDTO {
 	private String fromUserId;
 	private String toUserId;
 	private String chatContent;
-	private Date chatTime;
-	private String listType;
-	private int number;
+	private Date chatTime; 
+	private String listType; //listType
+	private int number; // count of call list
+	private int chatRead;
 }

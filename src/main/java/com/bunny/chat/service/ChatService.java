@@ -54,7 +54,7 @@ public class ChatService {
 	public String getTen(ChatDTO chatDTO) throws Exception
 	{
 		List<ChatDTO> charList = new ArrayList<ChatDTO>();
-		chatDTO.setNumber(10);
+		chatDTO.setNumber(100); 
 		charList = chatDAO.getChatRecentInfo(chatDTO);
 		
 		Gson gson = new Gson();
@@ -72,6 +72,17 @@ public class ChatService {
 		String jsonString = gson.toJson(charList);
 		
 		return jsonString;
+	}
+	
+	public int setReadFlag(ChatDTO chatDTO) throws Exception
+	{
+		return chatDAO.setReadFlag(chatDTO);
+	}
+	
+	public int getUnReadMessage(String userId) throws Exception
+	{
+		//check my unreadMessage 
+		return chatDAO.getUnreadMessage(userId);
 	}
 	
 }

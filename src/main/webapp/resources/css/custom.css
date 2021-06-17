@@ -12,17 +12,18 @@ p {
   font-size: 20px;
 }
 
-
 thead th {
     background-color: #006DCC;
     color: white;
     text-align: center;
 }
+
 tr td:first-child,
 tr th:first-child{
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
 }
+
 tr td:last-child,
 tr th:last-child{
     border-top-right-radius: 6px;
@@ -186,3 +187,113 @@ height:40px;
 .text-red {
     color: #e74c3c;
 }                
+
+
+/* link */
+a {
+    color: #000000;
+    text-decoration: none;
+}
+a:hover {
+    color: #bbbbbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* navigation */
+/* navigation bar background color */
+.navbar-default {
+    background-color: #006DCC;
+    border-color: #006DCC;
+    border-bottom-color: #dddddd;
+    border-bottom-width: 3px;
+    border-radius: 0px;
+}
+
+/* navigation Title color */
+.navbar-default .navbar-brand {
+    color: rgb(64, 128, 128);
+    padding-top: 25px;
+    /*font-family: ;*/
+}
+
+/* navigation Title over mouse */
+.navbar-default .navbar-hover,
+.navbar-default .navbar-brand:focus {
+    color: #dddddd;
+    background-color: transparent;
+}
+
+/* selected nabigation mouse color */
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #ffffff;
+    background-color: #1456b8;
+}
+
+/* navigation-default font */
+.navbar-default .navbar-nav > li > a {
+    color: #1a81ff;
+    font-family: 'Noto Sans KR';
+}
+
+/* navigation - mouse over */
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus{
+    color: #006DCC;
+}
+
+/* dropdown mouse */
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #006DCC;
+    text-decoration: none;
+    background-color: #ffffff;
+}
+
+/* toggle mouse */
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus{
+    background-color: #1456B8;
+}
+
+/* toggle iconbar */
+.navbar-default .navbar-toggle .icon-bar{
+    background-color: #dddddd;
+}
+
+/* small view dropdown mouse over */
+@media (max-width: 767px){
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #eeeeee;
+    }
+}
+
+/* navigationbar size fix */
+.navbar-fixed-top {
+    min-height: 70px;
+}
+
+/* navigationbar size fix */
+.navbar-nav > li > a {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    line-height: 70px;
+}
+
+@media (max-width: 767px){
+    .navbar-default .navbar-brand{
+        padding-top: 15px;
+    }
+    .navbar-nav > li > a {
+        padding-top: 0px;
+        padding-bottom: 0px;
+        line-height: 40px;
+    }
+}

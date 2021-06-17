@@ -30,4 +30,14 @@ public class ChatDAO {
 	{
 		return sqlSession.insert("chatMapper.submit", chatDTO);
 	}
+	
+	public int setReadFlag(ChatDTO chatDTO) throws Exception
+	{
+		return sqlSession.update("chatMapper.readFlag", chatDTO);
+	}
+	
+	public int getUnreadMessage(String userId) throws Exception
+	{
+		return sqlSession.selectOne("chatMapper.unReadMessage", userId);
+	}
 }

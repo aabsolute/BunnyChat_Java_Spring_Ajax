@@ -23,7 +23,15 @@
 			(from_user_id = #{fromUserId} and to_user_id = #{toUserId})
 		or
 			(from_user_id = #{toUserId} and to_user_id = #{fromUserId}))
-		and chat_id > (select MAX(chat_id) - #{number} from USER_CHAT_TABLE)
+		and chat_id > 
+			(select MAX(chat_id) - #{number} 
+			from USER_CHAT_TABLE 
+			where (
+				(from_user_id = #{fromUserId} and to_user_id = #{toUserId})
+			or
+				(from_user_id = #{toUserId} and to_user_id = #{fromUserId})
+				)
+			)
 		order by chat_time
 	</select>
 	
@@ -35,8 +43,21 @@
 			#{fromUserId},
 			#{toUserId},
 			#{chatContent},
+			DEFAULT,
 			DEFAULT
 		)
 	</insert>
 	
+	<update id="readFlag" parameterType="chat">
+		update USER_CHAT_TABLE
+		set chat_read = 1
+		where from_user_id = #{toUserId} and to_user_id = #{fromUserId}
+	</update>
+	
+	<select id="unReadMessage" parameterType="String" resultType="int">
+		select count(chat_id)
+		from USER_CHAT_TABLE
+		where to_user_id = #{userId}
+		and chat_read = 0
+	</select>
 </mapper>
