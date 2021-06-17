@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,10 +42,32 @@ public class ChatController {
 		return "chat/chat";
 	}
 	
+	@RequestMapping(value = "/findFriend", method = RequestMethod.GET)
+	public String searchFriend(Model model)
+	{
+		log.debug("searchFriend START");
+		
+		log.debug("searchFriend END");
+		
+		return "chat/findFriend";
+	}
+	
+	@RequestMapping(value = "/chatWithFindFriend", method = RequestMethod.GET)
+	public String chatWithFriend(Model model)
+	//, @ModelAttribute("toId") String friendId
+	{
+		log.debug("chatWithFriend START");
+		
+		
+		log.debug("chatWithFriend END");
+		
+		return "chat/chat";
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "/chatSubmit", method = RequestMethod.POST)
-	public int chatSubmit(ChatDTO chatDTO, HttpServletRequest request)
+	public int chatSubmit(@ModelAttribute ChatDTO chatDTO, HttpServletRequest request)
 	{
 		log.debug("chatSubmit POST START");
 		
@@ -64,14 +87,15 @@ public class ChatController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/chatList", method = RequestMethod.POST)
-	public String getChatList(ChatDTO chatDTO, HttpServletRequest request)
+	public String getChatList(@ModelAttribute ChatDTO chatDTO, HttpServletRequest request)
 	{
 		log.debug("chatList POST START");
 		
 		String result ="";
 		try {
 			if("ten".equals(chatDTO.getListType()))
-				result = chatService.getTen(chatDTO);
+				//result = chatService.getTen(chatDTO);
+				result = chatService.getId(chatDTO);
 			else {
 				result = chatService.getId(chatDTO);
 			}

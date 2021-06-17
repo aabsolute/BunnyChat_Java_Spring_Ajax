@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.bunny.chat.dao.ChatDAO;
 import com.bunny.chat.dto.ChatDTO;
@@ -37,7 +38,16 @@ public class ChatService {
 	
 	public int submit(ChatDTO chatDTO) throws Exception
 	{
-		int result = chatDAO.submit(chatDTO);
+		String toId = chatDTO.getToUserId();
+		String fromId = chatDTO.getFromUserId();
+		int result = 0;
+		
+		if(StringUtils.isEmpty(toId) || StringUtils.isEmpty(fromId))
+			return -1;
+		else if (toId.equals(fromId))
+			return -1;
+		else result = chatDAO.submit(chatDTO);
+		
 		return result;
 	}
 	

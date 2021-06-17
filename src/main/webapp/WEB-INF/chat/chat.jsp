@@ -23,14 +23,6 @@
 						<div id="chatlist" class="portlet-body chat-widget"
 							style="overflow-y: auto; width: auto; height: 600px"></div>
 						<div class="portlet-footer">
-							<%-- <div class="row">
-								<div class="form-group col-xs-4">
-									<input style="height: 40px;" type="text" id="chatName"
-										class="form-control"
-										placeholder="<spring:message code="label.chat.message.placeholder.username" />"
-										maxlength="8" />
-								</div>
-							</div> --%>
 							<div class="row" style="height: 90px;">
 								<div class="form-group col-xs-10">
 									<textarea style="height: 80px;" id="chatContent"
@@ -103,20 +95,22 @@
 					'chatId' : charId
 				},
 				success : function(jdata) {
-					if (jdata == "")
+					if (jdata == ""){
 						return;
+					}
 					var encodeData = decodeString(jdata);
 					var result = JSON.parse(encodeData);
 					for (key in result) {
 						if(result[key].fromUserId == fromId){
-							addMeChat("Me", decodeURIComponent(result[key].chatContent)
-									,decodeURIComponent(result[key].chatTime));
+							addMeChat("Me", result[key].chatContent
+									,result[key].chatTime);
 						}else{
-							addChat(decodeURIComponent(result[key].fromUserId),
-									decodeURIComponent(result[key].chatContent), decodeURIComponent(result[key].chatTime));	
+							addChat(result[key].fromUserId,
+									result[key].chatContent, result[key].chatTime);
 						}
 					}
 					lastId = Number(result[result.length-1].chatId);
+					alert(lastId);
 				}
 			});
 		}

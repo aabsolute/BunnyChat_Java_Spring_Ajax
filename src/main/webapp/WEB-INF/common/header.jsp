@@ -15,8 +15,18 @@
 		href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css">
-	<link rel="stylesheet"
-		href="/resources/css/custom.css">
+	<c:choose>
+		<c:when test="${lang ne null and lang eq 'jp'}" >
+			<link rel="stylesheet" href="/resources/css/custom_jp.css">
+		</c:when>
+		<c:when test="${lang ne null and lang eq 'ko'}" >
+			<link rel="stylesheet" href="/resources/css/custom_kr.css">
+		</c:when>
+		<c:otherwise>
+			<link rel="stylesheet" href="/resources/css/custom.css">
+		</c:otherwise>
+	</c:choose>
+	
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<!-- Bootstrap CDN Setting -->
 	
@@ -53,9 +63,13 @@
 					<li class="nav-item"><a
 					href="${pageContext.request.contextPath}/chat/main">ChatingRoom</a></li>
 					<li class="nav-item"><a
-					href="${pageContext.request.contextPath}/chat/findFirend">searchFriend</a></li>
+					href="${pageContext.request.contextPath}/chat/findFriend">searchFriend</a></li>
 					<li class="nav-item"><a
 					href="${pageContext.request.contextPath}/board/">BoardRoom</a></li>
+					<li class="nav-item"><a
+					href="${pageContext.request.contextPath}/language_kr?lang=ko">korean</a></li>
+					<li class="nav-item"><a
+					href="${pageContext.request.contextPath}/language_jp?lang=jp">japan</a></li>
 			</ul>
 			<c:choose>
 				<c:when test="${sessionScope.login.userId eq null}">

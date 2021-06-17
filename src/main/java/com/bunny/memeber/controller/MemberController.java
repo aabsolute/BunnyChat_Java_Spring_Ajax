@@ -116,8 +116,12 @@ public class MemberController {
 	public int memberCheckPOST(MemberDTO dto, HttpServletRequest request) throws Exception {
 		log.debug("ID_CHECK_POST START");
 		String userId = dto.getUserId();
-		int resultNum = memberService.memberCheck(userId);
 		HttpSession session = request.getSession();
+		MemberDTO loginUser = (MemberDTO) session.getAttribute("login");
+		if(loginUser != null && userId.toLowerCase().equals(loginUser.getUserId().toLowerCase())) {
+			return -1;
+		}
+		int resultNum = memberService.memberCheck(userId);
 		if (resultNum == 0) {
 			session.setAttribute("messageType", "successMessage");
 			session.setAttribute("messageContent", MessageUtils.getMessage("label.message.success.useid"));
@@ -138,5 +142,6 @@ public class MemberController {
 		log.debug("memberLogOut GET END");
 		return "redirect:/";
 	}
+	
 
 }
