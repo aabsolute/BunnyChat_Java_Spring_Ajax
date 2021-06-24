@@ -2,6 +2,8 @@ package com.bunny.chat.controller;
 
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bunny.chat.dto.ChatDTO;
 import com.bunny.chat.service.ChatService;
+import com.bunny.common.MessageUtils;
 import com.bunny.memeber.dto.MemberDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,14 +33,19 @@ public class ChatController {
 	ChatService chatService;
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String getCharInfo(Model model, HttpServletRequest request)
+	public String getCharInfo(Model model,@ModelAttribute("toId") String friendId, HttpServletRequest request)
 	{
 		log.debug("char START");
 		HttpSession session = request.getSession();
 		MemberDTO loginUser = (MemberDTO) session.getAttribute("login");
 		log.info(loginUser.getUserId());
-		
-		
+		if(StringUtils.isEmpty(friendId))
+		{
+			session.setAttribute("messageType", "errorMessage");
+			session.setAttribute("messageContent", MessageUtils.getMessage("label.chat.notouch.friend"));
+		}else {
+			model.addAttribute("toId", friendId);
+		}
 		log.debug("char END");
 		
 		return "chat/chat";
@@ -48,16 +57,14 @@ public class ChatController {
 		log.debug("searchFriend START");
 		
 		log.debug("searchFriend END");
-		
+			
 		return "chat/findFriend";
 	}
 	
 	@RequestMapping(value = "/chatWithFindFriend", method = RequestMethod.GET)
 	public String chatWithFriend(Model model)
-	//, @ModelAttribute("toId") String friendId
 	{
 		log.debug("chatWithFriend START");
-		
 		
 		log.debug("chatWithFriend END");
 		
@@ -77,8 +84,6 @@ public class ChatController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
 		
 		log.debug("chatSubmit POST END");
 		
@@ -123,6 +128,39 @@ public class ChatController {
 		}
 		
 		log.debug("getUnreadMessage POST END");
+		return result;
+	}
+	
+	
+	@RequestMapping(value = "/messageBox", method = RequestMethod.POST)
+	public void getMessageBox(@ModelAttribute("userId") String userId, Model model)
+	{
+		log.debug("messageBox POST START");
+		
+		List<ChatDTO> messageBoxList = new ArrayList<ChatDTO>();
+		try {
+			messageBoxList = chatService.getMessageBox(userId);
+		} catch (Exception e) {
+		}
+		
+		model.addAttribute("messageBoxList", messageBoxList);
+		log.debug("messageBox POST END");
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/messageBoxAjax", method = RequestMethod.POST)
+	public String getMessageBoxAjax(@ModelAttribute("userId") String userId)
+	{
+		log.debug("messageBoxAjax POST START");
+		String result = "";
+		try {
+			result = chatService.getMessageBox(userId, true);
+			result = URLEncoder.encode(result, "UTF-8");
+		} catch (Exception e) {
+		}
+		
+		log.debug("messageBoxAjax POST END");
+		
 		return result;
 	}
 	

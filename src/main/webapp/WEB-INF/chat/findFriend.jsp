@@ -89,7 +89,7 @@
 									+ '<tr>'
 									+ '<td style="text-align: center;"><h3>'
 									+ findId
-									+ '</h3><a href="${pageContext.request.contextPath}/chat/chatWithFindFriend?toId='
+									+ '</h3><a href="${pageContext.request.contextPath}/chat/main?toId='
 									+ findId
 									+ '" class="btn btn-primary pull-right" >'
 									+ '<spring:message code="label.friend.search.userId.success.result" /></a></td>'

@@ -5,33 +5,38 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Bootstrap CDN Setting -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<link rel="stylesheet"
-		href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	<link rel="stylesheet"
-		href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css">
-	<c:choose>
-		<c:when test="${lang ne null and lang eq 'jp'}" >
-			<link rel="stylesheet" href="/resources/css/custom_jp.css">
-		</c:when>
-		<c:when test="${lang ne null and lang eq 'ko'}" >
-			<link rel="stylesheet" href="/resources/css/custom_kr.css">
-		</c:when>
-		<c:otherwise>
-			<link rel="stylesheet" href="/resources/css/custom.css">
-		</c:otherwise>
-	</c:choose>
-	
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<!-- Bootstrap CDN Setting -->
-	
-	<!-- session alarm -->
-	<script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CDN Setting -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet"
+	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+	crossorigin="anonymous" />
+<link rel="stylesheet" type="text/css"
+	href="https://fonts.googleapis.com/earlyaccess/notosanskr.css">
+<c:choose>
+	<c:when test="${lang ne null and lang eq 'jp'}">
+		<link rel="stylesheet" href="/resources/css/custom_jp.css">
+	</c:when>
+	<c:when test="${lang ne null and lang eq 'ko'}">
+		<link rel="stylesheet" href="/resources/css/custom_kr.css">
+	</c:when>
+	<c:otherwise>
+		<link rel="stylesheet" href="/resources/css/custom.css">
+	</c:otherwise>
+</c:choose>
+
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- Bootstrap CDN Setting -->
+
+<!-- session alarm -->
+<script>
 	/* $(document).ready(function(){
 	    var check = "세션에 등록된값";
 	    if(check == ''){
@@ -40,8 +45,8 @@
 	    }   
 	     
 	}); */
-	</script>
-	<!-- session alarm -->
+</script>
+<!-- session alarm -->
 <title>BunnyChat</title>
 </head>
 <body>
@@ -59,18 +64,26 @@
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li class="nav-item"><a
-					href="${pageContext.request.contextPath}/"><spring:message code="label.menu.main" /></a></li>
-					<li class="nav-item"><a
-					href="${pageContext.request.contextPath}/chat/main"><spring:message code="label.menu.chatroom" /></a></li>
-					<li class="nav-item"><a
-					href="${pageContext.request.contextPath}/chat/findFriend"><spring:message code="label.menu.searchfriend" /><span id="unread" class="label babel-info"></span></a></li>
-					<li class="nav-item"><a
-					href="${pageContext.request.contextPath}/chat/messageBox"><spring:message code="label.menu.messagebox" /></a></li>
-					<li class="nav-item"><a
+					href="${pageContext.request.contextPath}/"><spring:message
+							code="label.menu.main" /></a></li>
+				<li class="nav-item"><a
+					href="${pageContext.request.contextPath}/chat/main"><spring:message
+							code="label.menu.chatroom" /></a></li>
+				<li class="nav-item"><a
+					href="${pageContext.request.contextPath}/chat/findFriend"><spring:message
+							code="label.menu.searchfriend" /></a></li>
+				<li class="nav-item">
+				<a href="#"
+					onclick="javascript:goMessageBox('<c:out value="${pageContext.request.contextPath}" />/chat/messageBox');"><spring:message
+							code="label.menu.messagebox" /><span id="unread"
+						class="label label-info"></span> </a></li>
+
+
+				<li class="nav-item"><a
 					href="${pageContext.request.contextPath}/board/">BoardRoom</a></li>
-					<li class="nav-item"><a
+				<li class="nav-item"><a
 					href="${pageContext.request.contextPath}/language_kr?lang=ko">korean</a></li>
-					<li class="nav-item"><a
+				<li class="nav-item"><a
 					href="${pageContext.request.contextPath}/language_jp?lang=jp">japan</a></li>
 			</ul>
 			<c:choose>
@@ -92,6 +105,8 @@
 				</c:when>
 				<c:otherwise>
 					<ul class="nav navbar-nav navbar-right">
+						<li class="nav-item"><a href="#"><c:out value="${sessionScope.login.userId}"/><spring:message
+											code="label.member.login.hello" /></a></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown" role="button" aria-haspopup="true"
 							aria-expanded="false"><spring:message
@@ -110,6 +125,30 @@
 		</div>
 	</nav>
 	<script type="text/javascript">
+		function goMessageBox(url) {
+			var userId = '<c:out value="${sessionScope.login.userId}"/>';
+			var form = document.createElement("form");
+	        var input = new Array();
+	        form.action = url;
+	        form.method = 'post';
+	        input[0] = document.createElement('input');
+	        input[0].setAttribute('type', 'hidden');
+	        input[0].setAttribute('name', 'userId');
+	        input[0].setAttribute('value', userId);
+	        form.appendChild(input[0]);
+	        /*
+	        for (var i = 0; i < parm.length; i++) {
+	            input[i] = document.createElement("input");
+	            input[i].setAttribute("type", "hidden");
+	            input[i].setAttribute('name', parm[i][0]);
+	            input[i].setAttribute("value", parm[i][1]);
+	            form.appendChild(input[i]);
+	        }
+	        */
+	        document.body.appendChild(form);
+	        form.submit();
+		};
+
 		function getUnread() {
 			var userId = '<c:out value="${sessionScope.login.userId}"/>';
 			$.ajax({
@@ -127,17 +166,25 @@
 				}
 			});
 		}
-		
-		function getInfiniteUnread(){
+
+		function getInfiniteUnread() {
 			setInterval(function() {
 				getUnread();
 			}, 5000);
 		}
 
-		function showUnread(result){
+		function showUnread(result) {
 			$('#unread').html(result);
 		}
-		
 	</script>
+
+	<c:if test="${not empty sessionScope.login.userId}">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				getInfiniteUnread();
+			})
+		</script>
+	</c:if>
+
 </body>
 </html>

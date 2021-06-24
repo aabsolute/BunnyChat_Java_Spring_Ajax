@@ -60,4 +60,17 @@
 		where to_user_id = #{userId}
 		and chat_read = 0
 	</select>
+	
+	
+	<select id="getMessageBoxList" parameterType="String" resultType="chat">
+		select * 
+		from USER_CHAT_TABLE
+		where chat_id in (
+				select Max(chat_id) 
+		      	from USER_CHAT_TABLE 
+		      	where to_user_id = #{userId} 
+		            or from_user_id = #{userId} group by from_user_id, to_user_id
+		      ) 
+		
+	</select>
 </mapper>

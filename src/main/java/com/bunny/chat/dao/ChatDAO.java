@@ -40,4 +40,9 @@ public class ChatDAO {
 	{
 		return sqlSession.selectOne("chatMapper.unReadMessage", userId);
 	}
+	
+	public List<ChatDTO> getMessageBox(String userId) throws Exception
+	{
+		return sqlSession.selectList("chatMapper.getMessageBoxList", userId);
+	}
 }

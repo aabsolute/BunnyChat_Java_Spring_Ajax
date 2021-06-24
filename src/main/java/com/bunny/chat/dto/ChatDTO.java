@@ -22,4 +22,12 @@ public class ChatDTO {
 	private String listType; //listType
 	private int number; // count of call list
 	private int chatRead;
+	
+	public void setFromUserId(String fromUserId) {
+		this.fromUserId = fromUserId.toLowerCase();
+	}
+	
+	public void setToUserId(String toUserId) {
+		this.toUserId = toUserId.toLowerCase();
+	}
 }

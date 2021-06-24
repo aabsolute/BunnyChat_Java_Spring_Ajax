@@ -22,4 +22,8 @@ public class MemberDTO {
 	private String userInfomation;
 	
 	//private String status;
+	
+	public void setUserId(String userId) {
+		this.userId = userId.toLowerCase();
+	}
 }
