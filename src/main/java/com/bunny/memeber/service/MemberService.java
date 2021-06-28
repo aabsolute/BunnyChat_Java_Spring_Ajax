@@ -37,6 +37,19 @@ public class MemberService {
 		return memberDAO.memberCheck(userID);
 	}
 	
+	public MemberDTO getMemberById(String userID) throws Exception
+	{
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO = memberDAO.getMemberById(userID); 
+		
+		return memberDTO;
+	}
+	
+	public int setMemberUpdate(MemberDTO member) throws Exception
+	{
+		return memberDAO.setMemberUpdate(member);
+	}
+	
 	
 	
 }

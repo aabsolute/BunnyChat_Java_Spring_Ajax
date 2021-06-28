@@ -27,5 +27,17 @@ public class MemberDAO {
 	{
 		return sqlSession.selectOne("memberMapper.memberCheck", userId);
 	}
+	public MemberDTO getMemberById(String userId) throws Exception
+	{
+		return sqlSession.selectOne("memberMapper.memberInfoById", userId);
+	}
+	public MemberDTO getMemberByAny(MemberDTO memberDTO) throws Exception
+	{
+		return sqlSession.selectOne("memberMapper.memberInfoByAny", memberDTO);
+	}
+	public int setMemberUpdate(MemberDTO memberDTO) throws Exception
+	{
+		return sqlSession.update("memberMapper.memberUpdate", memberDTO);
+	}
 	
 }

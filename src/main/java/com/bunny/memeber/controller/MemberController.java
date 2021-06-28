@@ -1,3 +1,4 @@
+
 package com.bunny.memeber.controller;
 
 import javax.inject.Inject;
@@ -118,7 +119,7 @@ public class MemberController {
 		String userId = dto.getUserId();
 		HttpSession session = request.getSession();
 		MemberDTO loginUser = (MemberDTO) session.getAttribute("login");
-		if(loginUser != null && userId.toLowerCase().equals(loginUser.getUserId().toLowerCase())) {
+		if (loginUser != null && userId.toLowerCase().equals(loginUser.getUserId().toLowerCase())) {
 			return -1;
 		}
 		int resultNum = memberService.memberCheck(userId);
@@ -142,6 +143,34 @@ public class MemberController {
 		log.debug("memberLogOut GET END");
 		return "redirect:/";
 	}
+
+	// 7. member management
+	@RequestMapping(value = "/management", method = RequestMethod.GET)
+	public String memberManagement(Model model, HttpServletRequest request) {
+		log.debug("memberManagement GET START");
+
+		HttpSession session = request.getSession();
+		MemberDTO member = (MemberDTO) session.getAttribute("login");
+		
+		model.addAttribute("member", member);
+		log.debug("memberManagement GET END");
+		return "member/update";
+	}
 	
+	// 7. member management
+		@RequestMapping(value = "/management", method = RequestMethod.POST)
+		public String memberManagementUpdate(@ModelAttribute("member")MemberDTO member) {
+			log.debug("memberManagement POST START");
+			
+			int temp = 0;
+			try {
+				temp = memberService.setMemberUpdate(member);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			log.debug("memberManagement POST END");
+			return "redirect:/";
+		}
 
 }

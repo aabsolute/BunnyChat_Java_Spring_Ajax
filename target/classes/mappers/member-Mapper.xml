@@ -11,6 +11,7 @@
 		, USER_NAME
 		, USER_PASSWORD
 		, USER_AGE
+		, USER_GENDER
 		, USER_INFOMATION 
 		, USER_regdate
 		, USER_lastLogin)
@@ -20,6 +21,7 @@
 		, #{userName}
 		, #{userPassword} 
 		, #{userAge} 
+		, #{userGender} 
 		, #{userInfomation}
 		, DEFAULT 
 		, DEFAULT)
@@ -30,10 +32,38 @@
 		where USER_ID = #{userId}
 		and USER_PASSWORD = #{userPassword}
 	</select>
-	<select id="memberCheck" parameterType="String"  resultType="int">
+	<select id="memberCheck" parameterType="String"  resultType="_int">
 		SELECT count(user_id)
 		FROM MEMBER_INFO_TABLE
 		where USER_ID = #{userId}
 	</select>
-
+	<select id="memberInfoById" parameterType="String"  resultType="member">
+		SELECT * 
+		FROM MEMBER_INFO_TABLE
+		where USER_ID = #{userId}
+	</select>
+	<select id="memberInfoByAny" parameterType="member"  resultType="member">
+		SELECT * 
+		FROM MEMBER_INFO_TABLE
+		where 1 = 1
+		<if test='userId != null and userId ne "".toString()'>
+			and USER_ID = #{userId}
+		</if>
+		<if test='userName != null and userName ne "".toString()'>
+			and USER_NAME = #{userName}
+		</if>
+		<if test='userEmail != null and userEmail ne "".toString()'>
+			and USER_EMAIL = #{userEmail}
+		</if>
+	</select>
+	<update id="memberUpdate" parameterType="member">
+		Update MEMBER_INFO_TABLE set
+		USER_PASSWORD = #{userPassword}
+		,USER_NAME = #{userName}
+		,USER_AGE = #{userAge}
+		,USER_GENDER = #{userGender}
+		,USER_EMAIL = #{userEmail}
+		,USER_INFOMATION = #{userInfomation}
+		where USER_ID = #{userId}
+	</update>
 </mapper>
