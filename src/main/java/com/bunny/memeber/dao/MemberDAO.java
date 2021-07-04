@@ -39,5 +39,9 @@ public class MemberDAO {
 	{
 		return sqlSession.update("memberMapper.memberUpdate", memberDTO);
 	}
+	public int setMemberProfileUpdate(MemberDTO memberDTO) throws Exception
+	{
+		return sqlSession.update("memberMapper.memberProfileUpdate", memberDTO);
+	}
 	
 }

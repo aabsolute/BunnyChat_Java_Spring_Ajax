@@ -113,6 +113,14 @@
 							id="userEmail" name="userEmail" value="${member.userEmail}"
 							placeholder="<spring:message code="label.member.join.insertuseremail" />"></td>
 					</tr>
+					<c:if test="${not empty member.userInfomation}">
+						<tr>
+							<td style="width: 120px"><h5>
+									<spring:message code="label.member.join.userinfomation" />
+								</h5></td>
+							<td colspan="2"><img src="${member.userInfomation}" height="200" width="200"/></td>
+						</tr>
+					</c:if>
 					<tr>
 						<td style="text-align: left;" colspan="3"><h5
 								style="color: red;" id="passwordChkMessage"></h5>

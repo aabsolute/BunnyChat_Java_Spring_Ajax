@@ -31,4 +31,13 @@ desc MEMBER_INFO_TABLE
 
 select count(user_infomation) FROM vivienne.member_info_table;
 
-select * from all_ind_columns where table_name='member_info_table'
+select * from all_ind_columns where table_name='member_info_table';
+
+
+alter table  vivienne.member_info_table modify user_gender  char(1) default 'm' not null;
+
+
+update member_info_table set user_gender= 'f' ;
+
+
+update member_info_table set (user_gender, user_name) = ('m', 'hhhhhhhhhh') where user_id = 'buffalo22' ;

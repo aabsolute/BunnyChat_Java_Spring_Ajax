@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -80,7 +81,7 @@
 
 
 				<li class="nav-item"><a
-					href="${pageContext.request.contextPath}/board/">BoardRoom</a></li>
+					href="${pageContext.request.contextPath}/board/main">BoardRoom</a></li>
 				<li class="nav-item"><a
 					href="${pageContext.request.contextPath}/language_kr?lang=ko">korean</a></li>
 				<li class="nav-item"><a
@@ -115,6 +116,9 @@
 								<li><a
 									href="${pageContext.request.contextPath}/member/management"><spring:message
 											code="label.member.title.management" /></a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/member/profileManagement"><spring:message
+											code="label.member.profile.management" /></a></li>
 								<li><a
 									href="${pageContext.request.contextPath}/member/logout"><spring:message
 											code="label.member.logout" /></a></li>

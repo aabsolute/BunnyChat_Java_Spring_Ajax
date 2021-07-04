@@ -50,6 +50,9 @@ public class MemberService {
 		return memberDAO.setMemberUpdate(member);
 	}
 	
-	
+	public int setMemberProfileUpdate(MemberDTO member) throws Exception
+	{
+		return memberDAO.setMemberProfileUpdate(member);
+	}
 	
 }
