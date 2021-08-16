@@ -3,13 +3,14 @@ package com.bunny.memeber.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.stream.Stream;
 
-import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.bunny.common.ImageExtends;
 import com.bunny.common.MessageUtils;
 import com.bunny.memeber.dto.MemberDTO;
 import com.bunny.memeber.service.MemberService;
@@ -37,8 +37,11 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 
 
-	@Inject
+	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	private ServletContext cts;
 
 	// @Autowired
 	// BCryptPasswordEncoder passEncoder;
@@ -222,8 +225,12 @@ public class MemberController {
 		String userId = request.getParameter("userId");
 		// 업로드 파일이 저장될 경로
 		//String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-        String savePath = request.getSession().getServletContext().getRealPath("/upload");
-        // 파일 이름
+		//String tempPath = cts.getRealPath("/upload");
+		
+        //String savePath = request.getSession().getServletContext().getRealPath("/upload");
+        
+		String savePath = request.getSession().getServletContext().getRealPath("\\resources\\upload") + "/";
+		// 파일 이름
         MultipartFile report = request.getFile("userInfomation");
         String fileName = report.getOriginalFilename();
         String fileExtension = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
@@ -232,8 +239,8 @@ public class MemberController {
         memberForSave.setUserInfomation(fileName);
         // 파일 전송
         try {
-        	ImageExtends [] ex = ImageExtends.values();
-        	if(Arrays.stream(ex).anyMatch(name-> name.word(fileExtension))) {
+        	Stream<String> builderStream = Stream.<String>builder().add("jpg").add("png").add("gif").build();
+        	if(builderStream.filter(s -> s.equals(fileExtension)).count() > 0) {
         		String prev = memberService.getMemberById(userId).getUserInfomation();
 				if (!StringUtils.isEmpty(prev)) {
 					File prevFile = new File(savePath + "\\" + prev);

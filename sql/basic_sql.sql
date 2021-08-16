@@ -24,17 +24,18 @@ create table user_chat_table (
 
 create table board_table(
 	user_id varchar(64),
-    board_id int primary key,
+    board_id int primary key auto_increment,
     board_title varchar(64) not null,
     board_content varchar(2048),
     board_date datetime default now(),
-    board_hit int,
+    board_hit int default 0,
     board_file varchar(64),
     board_realFile varchar(64),
     board_group int,
     board_sequence int,
     board_level int
 );
+
 
 insert into MEMBER_INFO_TABLE(user_ID,user_EMAIL,user_Name,user_Password,user_age,user_Gender,user_INFOMATION) values('GTmember_infomember_info','naver@naver.com','name','password',19,'m','i am manager');
 

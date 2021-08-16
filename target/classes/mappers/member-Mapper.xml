@@ -71,4 +71,9 @@
 		USER_INFOMATION = #{userInfomation}
 		where USER_ID = #{userId}
 	</update>
+	<select id="memberInfo" parameterType="member"  resultType="String">
+		SELECT USER_INFOMATION 
+		FROM MEMBER_INFO_TABLE
+		where USER_ID = #{userId}
+	</select>
 </mapper>

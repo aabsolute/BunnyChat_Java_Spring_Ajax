@@ -23,18 +23,18 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="item" items="${boardList}"  varStatus="status">
+				<c:forEach var="item" items="${boardList}" varStatus="status">
 					<tr>
-					<th style="background-color: #fafafa; color: #000000; width: 70px;" value="${item.boardId}"></th>
-					<th style="background-color: #fafafa; color: #000000;" value="${item.boardTitle}"></th>
-					<th style="background-color: #fafafa; color: #000000;" value="${item.userId}"></th>
-					<th style="background-color: #fafafa; color: #000000; width: 100px;" value="${item.boardDate}"></th>
-					<th style="background-color: #fafafa; color: #000000; width: 70px;" value="${item.boardHit}"></th>
+						<th>${item.boardId}</th>
+						<th>${item.boardTitle}</th>
+						<th>${item.userId}</th>
+						<th>${item.boardDate}</th>
+						<th>${item.boardHit}</th>
 					</tr>
 				</c:forEach>
 					<tr>
 						<td colspan="5">
-						<a class="btn btn-primary pull-right" type="submit" href="${pageContext.request.contextPath}/chat/write">
+						<a class="btn btn-primary pull-right" type="submit" href="${pageContext.request.contextPath}/board/write">
 							<spring:message code="label.bunny.board.regist.write" />
 						</a>
 						</td>

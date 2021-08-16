@@ -43,5 +43,9 @@ public class MemberDAO {
 	{
 		return sqlSession.update("memberMapper.memberProfileUpdate", memberDTO);
 	}
+	public String getMemberProfileInfo(String userId) throws Exception
+	{
+		return sqlSession.selectOne("memberMapper.memberInfo", userId);
+	}
 	
 }

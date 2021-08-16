@@ -36,11 +36,33 @@
 		<property name="messageSourceAccessor"
 			ref="messageSourceAccessor" />
 	</bean>
-	
+
 	<!-- Default Location 설정 -->
-	<bean id="localeResolver"
+	<bean id="sessionLocaleResolver"
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 		<property name="defaultLocale" value="jp"></property>
+	</bean>
+
+	<bean id="cookieLocaleResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="cookieName" value="clientlanguage" />
+		<property name="cookieMaxAge" value="100000" />
+		<property name="cookiePath" value="web/cookie" />
+		<property name="defaultLocale" value="jp" />
+		<!-- <beans:property name="defaultLocale" value="ko" /> -->
+	</bean>
+
+	<bean id="localeChangeInterceptor"
+		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="lang" />
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="interceptors">
+		<list>
+			<ref bean="localeChangeInterceptor"/>
+		</list>
+		</property>
 	</bean>
 
 </beans>

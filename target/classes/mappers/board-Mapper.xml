@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardMapper">
+	
+	<insert id="registBoard" parameterType="board">
+		insert into board_table 
+		values 
+		(
+			#{userId},
+			DEFAULT,
+			#{boardTitle},
+			#{boardContent},
+			#{boardDate},
+			DEFAULT,
+			#{boardFile},
+			#{boardGroup},
+			#{boardSequence},
+			#{boardLevel}
+		)
+	</insert>
+	<select  id="searchAllBoard"  resultType="board">
+		select * from board_table order by board_id desc
+	</select>
+	<select  id="searchOneBoard" parameterType="int" resultType="board">
+		select * from board_table
+		where board_id = #{boardId}
+	</select>
+	<select  id="searchKeywordBoard" parameterType="board" resultType="board">
+		select * from board_table 
+		<where>
+			 <if test="userId != null and userId != ''">
+			 	and user_id = #{userId}
+			 </if>
+			 <if test="boardId != null and boardId != ''">
+			 	and board_Id = #{boardId}
+			 </if>
+			 <if test="boardTitle != null and boardTitle != ''">
+			 	and board_Title = #{boardTitle}
+			 </if>
+			 <if test="boardTitle != null and boardTitle != ''">
+			 	and board_Title = #{boardTitle}
+			 </if>
+		</where>
+		order by board_id desc
+	</select>
+</mapper>

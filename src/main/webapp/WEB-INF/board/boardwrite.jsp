@@ -11,7 +11,7 @@
 <body>
 
 	<div class="container">
-		<form method="post" action="${pageContext.request.contextPath}/member/profileManagement" method="POST" enctype="multipart/form-data">
+		<form method="post" modelAttribute="boardDTO" action="${pageContext.request.contextPath}/board/write" method="POST" enctype="multipart/form-data">
 			<table class="table table-bordered table-hover"
 				style="text-align: center; border: 1px solid #dddddd">
 				<thead>
@@ -23,7 +23,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td style="width: 120px"><h5>
+						<td style="width: 110px"><h5>
 								<spring:message code="label.member.board.write.userid" />
 							</h5></td>
 						<td><input class="form-control" type="text" id="userId"
@@ -31,28 +31,38 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="width: 120px"><h5>
+						<td style="width: 110px"><h5>
 								<spring:message code="label.member.board.write.title" />
 							</h5></td>
-						<td><input class="form-control" type="text" id="userId"
-							name="userId" value="${board.boardTitle}">
+						<td><input class="form-control" type="text" name="boardTitle">
 						</td>
 					</tr>
 					<tr>
 						<td style="width: 110px"><h5>
-								<spring:message code="label.member.profile.title.photo" />
+								<spring:message code="label.member.board.write.content" />
+							</h5></td>
+						<td>
+							<textarea class="form-control" name="boardContent" rows="10" maxlength="2048"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 110px"><h5>
+								<spring:message code="label.member.board.write.file.upload" />
 							</h5></td>
 						<td colspan="2">
-							<input type="file" name="boardFile" class="file">
+							<input type="file" name="boardRealFile" class="file" id="gdsImg">
 							<div class="input-group col-xs-12">
 								<span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
-								<input type="text" name="form-control input-lg" disabled placeholder="fileupload">
+								<input class="form-control input-lg" type="text" disabled placeholder="fileupload">
 								<span class="input-group-btn">
 									<button class="browse btn btn-primary input-lg" type="button">
 										<i class="glyphicon glyphicon-search"></i><spring:message code="label.member.board.search.file" />
 									</button>
 								</span>
 							</div>
+						</td>
+						<td>
+							<div class="select_img"><img src="" /></div>
 						</td>　
 					</tr>
 					<tr>
@@ -67,16 +77,29 @@
 		</form>
 	</div>
 	<script type="text/javascript">
-		function fileDown(){
-			var form = document.createElement("form2");
-	         form.setAttribute("charset", "UTF-8");
-	         form.setAttribute("method", "Post");  //Post 방식
-	         form.setAttribute("action", "./member/download"); //요청 보낼 주소
-	         form.submit();
-		}
+		$(document).on('click','.browse', function(){
+			var file = $(this).parent().parent().parent().find('.file');
+			file.trigger('click');
+		});
 
-
+		$(document).on('change','.file', function(){
+			$(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i,''));
+		});
+		$("#gdsImg").change(function(){
+		   if(this.files && this.files[0]) {
+		    var reader = new FileReader;
+		    reader.onload = function(data) {
+		     $(".select_img img").attr("src", data.target.result).width(500);
+		    }
+		    reader.readAsDataURL(this.files[0]);
+		   }
+		  });
 	</script>
 	<%@ include file="/WEB-INF/common/footer.jsp"%>
+	<input type="hidden" name="boardDate" value="${board.boardDate}">
+	<input type="hidden" name="boardHit" value="${board.boardHit}">
+	<input type="hidden" name="boardGroup" value="${board.boardGroup}">
+	<input type="hidden" name="boardSequence" value="${board.boardSequence}">
+	<input type="hidden" name="boardLevel" value="${board.boardLevel}">
 </body>
 </html>

@@ -94,14 +94,15 @@ public class ChatController {
 	@RequestMapping(value = "/chatList", method = RequestMethod.POST)
 	public String getChatList(@ModelAttribute ChatDTO chatDTO, HttpServletRequest request)
 	{
-		log.debug("chatList POST START");
-		
+		log.debug("chatList POST START");  
+		//  C:\workspace7\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\BunnyChat\resources\\upload
+		String savePath = request.getSession().getServletContext().getRealPath("\\resources\\upload") + "/";
 		String result ="";
 		try {
 			if("ten".equals(chatDTO.getListType()))
-				result = chatService.getTen(chatDTO);
+				result = chatService.getTen(chatDTO,savePath);
 			else {
-				result = chatService.getId(chatDTO);
+				result = chatService.getId(chatDTO,savePath);
 			}
 			result = URLEncoder.encode(result, "UTF-8");
 			if(!"".equals(result)) {

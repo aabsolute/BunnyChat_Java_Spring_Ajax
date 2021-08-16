@@ -9,18 +9,19 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 
 @ToString
 @Getter
-@Setter
-@Builder(builderMethodName = "boardDTOBuilder")
-@Alias("board")
-public class BoardDTO {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder(builderMethodName = "boardVOBuilder")
+@Alias("board2")
+public class BoardVO {
 
 	@NotEmpty 
 	private String userId;
@@ -42,21 +43,10 @@ public class BoardDTO {
 	@Builder.Default 
 	int boardLevel=0;
 	
-	public BoardDTO() {
-	}
-	
 	@Builder
-	public BoardDTO(String userId, String boardTitle) {
+	public BoardVO(String userId, String boardTitle) {
 		this.userId = userId;
 		this.boardTitle = boardTitle;
-		this.boardDate = LocalDateTime.now();
 	}
-	
-	public static BoardDTOBuilder builder(String userId, String boardTitle) {
-        if(StringUtils.isEmpty(userId) || StringUtils.isEmpty(boardTitle)) {
-            throw new IllegalArgumentException("nessecery parameter");
-        }
-        return boardDTOBuilder().userId(userId).boardTitle(boardTitle);
-    }
 
 }

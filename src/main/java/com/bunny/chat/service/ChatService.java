@@ -3,20 +3,22 @@ package com.bunny.chat.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.bunny.chat.dao.ChatDAO;
 import com.bunny.chat.dto.ChatDTO;
+import com.bunny.memeber.dao.MemberDAO;
 import com.google.gson.Gson;
 
 @Service
 public class ChatService {
 
-	@Inject
+	@Autowired
 	ChatDAO chatDAO;
+	@Autowired
+	MemberDAO memberDAO;	
 	
 	public List<ChatDTO> getChatInfo(ChatDTO chatDTO) throws Exception
 	{
@@ -51,26 +53,31 @@ public class ChatService {
 		return result;
 	}
 	
-	public String getTen(ChatDTO chatDTO) throws Exception
+	public String getTen(ChatDTO chatDTO, String savePath) throws Exception
 	{
-		List<ChatDTO> charList = new ArrayList<ChatDTO>();
+		List<ChatDTO> chatList = new ArrayList<ChatDTO>();
 		chatDTO.setNumber(100); 
-		charList = chatDAO.getChatRecentInfo(chatDTO);
 		
+		String myProfile = memberDAO.getMemberProfileInfo(chatDTO.getFromUserId());
+		String yourProfile = memberDAO.getMemberProfileInfo(chatDTO.getToUserId());
+		chatList = chatDAO.getChatRecentInfo(chatDTO);
+		setProfile(chatList, savePath, myProfile, yourProfile);
 		Gson gson = new Gson();
-		String jsonString = gson.toJson(charList);
+		String jsonString = gson.toJson(chatList);
 		
 		return jsonString;
 	}
 	
-	public String getId(ChatDTO chatDTO) throws Exception
+	public String getId(ChatDTO chatDTO, String savePath) throws Exception
 	{
 		List<ChatDTO> chatList = new ArrayList<ChatDTO>();
 		chatList = chatDAO.getChatInfo(chatDTO);
 		
+		String myProfile = memberDAO.getMemberProfileInfo(chatDTO.getFromUserId());
+		String yourProfile = memberDAO.getMemberProfileInfo(chatDTO.getToUserId());
+		setProfile(chatList, savePath, myProfile, yourProfile);
 		Gson gson = new Gson();
 		String jsonString = gson.toJson(chatList);
-		
 		return jsonString;
 	}
 	
@@ -85,7 +92,7 @@ public class ChatService {
 		return chatDAO.getUnreadMessage(userId);
 	}
 	
-	public List<ChatDTO> getMessageBox(String userId ) throws Exception
+	public List<ChatDTO> getMessageBox(String userId) throws Exception
 	{
 		//my all list
 		List<ChatDTO> chatList = new ArrayList<ChatDTO>();
@@ -99,6 +106,8 @@ public class ChatService {
 		//my all list
 		List<ChatDTO> chatList = new ArrayList<ChatDTO>();
 		chatList = chatDAO.getMessageBox(userId);
+		
+		
 		deleteDuplication(chatList);
 		
 		Gson gson = new Gson();
@@ -130,6 +139,27 @@ public class ChatService {
 				}
 			}
 		}
+	}
+	
+	private void setProfile(List<ChatDTO> chatList, String savePath, String myProfile, String yourProfile) {
+		
+		for(ChatDTO chat : chatList)
+		{
+			if(StringUtils.isEmpty(myProfile))
+			{
+				chat.setMyProfile("/resources/images/rabbit.png");
+			}else {
+				chat.setMyProfile(savePath + myProfile);
+			}
+			
+			if(StringUtils.isEmpty(yourProfile))
+			{
+				chat.setYourProfile("/resources/images/man.png");
+			}else {
+				chat.setYourProfile(savePath + yourProfile);
+			}
+		}
+		
 	}
 	
 }

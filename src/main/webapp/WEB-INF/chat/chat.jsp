@@ -102,11 +102,12 @@
 					var result = JSON.parse(encodeData);
 					for (key in result) {
 						if(result[key].fromUserId == fromId){
+							alert(result[key].myProfile);
 							addMeChat("Me", result[key].chatContent
-									,result[key].chatTime);
+									,result[key].chatTime, result[key].myProfile);
 						}else{
 							addChat(result[key].fromUserId,
-									result[key].chatContent, result[key].chatTime);
+									result[key].chatContent, result[key].chatTime, result[key].yourProfile);
 						}
 					}
 					lastId = Number(result[result.length-1].chatId);
@@ -114,14 +115,16 @@
 			});
 		}
 
-		function addChat(chatName, chatContent, chatTime) {
+		function addChat(chatName, chatContent, chatTime, chatProfile) {
 			$('#chatlist')
 					.append(
 							'<div class="row">'
 									+ '<div class="col-lg-12">'
 									+ '<div class="media">'
 									+ '<a class="pull-left" href="#">'
-									+ '<img class="media-object img-circle" style="width: 30px; height:30px;" src="/resources/images/man.png" alt="">'
+									+ '<img class="media-object img-circle" style="width: 30px; height:30px;" src="'
+									+ chatProfile
+									+ '" alt="">'
 									+ '</a>' + '<div class="media-body">'
 									+ '<h4 class="media-heading">' + chatName
 									+ '<span class="small pull-right">'
@@ -131,14 +134,16 @@
 			$('#chatlist').scrollTop($('#chatlist')[0].scrollHeight);
 		}
 
-		function addMeChat(chatName, chatContent, chatTime) {
+		function addMeChat(chatName, chatContent, chatTime, chatProfile) {
 			$('#chatlist')
 					.append(
 							'<div class="row">'
 									+ '<div class="col-lg-12">'
 									+ '<div class="media">'
 									+ '<a class="pull-left" href="#">'
-									+ '<img class="media-object img-circle" style="width: 30px; height:30px;" src="/resources/images/rabbit.png" alt="">'
+									+ '<img class="media-object img-circle" style="width: 30px; height:30px;" src="'
+									+ chatProfile
+									+ '" alt="">'
 									+ '</a>' + '<div class="media-body">'
 									+ '<h4 class="media-heading">' + chatName
 									+ '<span class="small pull-right">'

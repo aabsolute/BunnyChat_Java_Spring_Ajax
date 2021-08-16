@@ -1,4 +1,4 @@
-SELECT * FROM vivienne.member_info_table;
+SELECT * FROM vivienne.member_info_table order by user_regdate desc;
 
 call alterNameLow();
 

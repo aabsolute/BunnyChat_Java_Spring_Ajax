@@ -4,6 +4,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
@@ -13,6 +14,7 @@
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
+	<annotation-driven validator="validator" />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
@@ -22,6 +24,7 @@
 		location="/resources/img/" /> -->
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
+
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/" />
@@ -29,36 +32,33 @@
 	</beans:bean>
 
 	<!-- 인터셉터 객체 생성 -->
-	<beans:bean id="AuthLoginInterceptor" class="com.bunny.interceptor.AuthLoginInterceptor">
+	<beans:bean id="AuthLoginInterceptor"
+		class="com.bunny.interceptor.AuthLoginInterceptor">
 	</beans:bean>
-	
-	<!-- 인터셉터 객체 생성 -->
-	<!-- <beans:bean  id="LocaleInterceptor"  class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-		<beans:property name="paramName" value="lang" />
-	</beans:bean> -->
-	
+
+
 	<!-- Interceptor 설정 -->
 	<interceptors>
-	    <interceptor>
-	        <mapping path="/chat/**"/>
-	        <mapping path="/board/**"/>         
-	        <exclude-mapping path="/resources/**"/>
-	        <beans:ref bean="AuthLoginInterceptor"/>
-	    </interceptor>
-	    
-	  <!--   <interceptor>         locale interceptor;;;;
-			<mapping path="/**" />
-			<exclude-mapping path="/resources/**"/>
-	        <beans:ref bean="LocaleInterceptor"/>
+		<interceptor>
+			<mapping path="/chat/**" />
+			<mapping path="/board/**" />
+			<exclude-mapping path="/resources/**" />
+			<beans:ref bean="AuthLoginInterceptor" />
 		</interceptor>
-	 -->
-	</interceptors>
-	
-	<!-- MultipartResolver 설정 -->
-    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-      <beans:property name="maxUploadSize" value="100000000" />
-      <beans:property name="maxInMemorySize" value="100000000" />
-    </beans:bean>
 
-	<context:component-scan base-package="com.bunny.*" />
+		<!-- <interceptor> locale interceptor;;;; <mapping path="/**" /> <exclude-mapping 
+			path="/resources/**"/> <beans:ref bean="LocaleInterceptor"/> </interceptor> -->
+	</interceptors>
+
+
+	<!-- MultipartResolver 설정 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="100000000" />
+		<beans:property name="maxInMemorySize"
+			value="100000000" />
+	</beans:bean>
+
+	<context:component-scan
+		base-package="com.bunny.*" />
 </beans:beans>

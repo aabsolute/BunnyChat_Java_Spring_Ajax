@@ -22,6 +22,8 @@ public class ChatDTO {
 	private String listType; //listType
 	private int number; // count of call list
 	private int chatRead;
+	private String myProfile;
+	private String yourProfile;
 	
 	public void setFromUserId(String fromUserId) {
 		this.fromUserId = fromUserId.toLowerCase();
